@@ -13,56 +13,32 @@ hoặc
 ## API
 
 ### useQuery
-`
+```
   const { 
-
     data, 
-
     error, 
-
     isIdle, 
-
     isError, 
-
     isFetched, 
-
     isFetching, 
-
     isLoading, 
-
     isStale, 
-
     isSuccess, 
-
     status, 
-
     ...rest, 
-
   } = useQuery(queryKey, queryFn?, { 
-
     cacheTime, 
-
     enabled, 
-
     refetchInterval, 
-
     refetchIntervalInBackground, 
-
     refetchOnReconnect, 
-
     refetchOnWindowFocus, 
-
     retry, 
-
     retryDelay, 
-
     staleTime, 
-
     ...rest, 
-
   }) 
-  
-`
+```
 
 - `queryKey: string | unknown[]`
   - Định danh cho query, phân biệt giữa các query khác
