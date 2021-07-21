@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# Demo sử dụng React với React Query để truy vấn dữ liệu
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Link tài liệu: [docs](https://react-query.tanstack.com/overview)
 
-## Available Scripts
+## Cài đặt
 
-In the project directory, you can run:
+### `yarn add react-query`
 
-### `yarn start`
+hoặc
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `npm install react-query`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## API
 
-### `yarn test`
+### useQuery
+`
+  const {
+    data,
+    error,
+    isIdle,
+    isError,
+    isFetched,
+    isFetching,
+    isLoading,
+    isStale,
+    isSuccess,
+    status,
+    ...rest,
+  } = useQuery(queryKey, queryFn?, {
+    cacheTime,
+    enabled,
+    refetchInterval,
+    refetchIntervalInBackground,
+    refetchOnReconnect,
+    refetchOnWindowFocus,
+    retry,
+    retryDelay,
+    staleTime,
+    ...rest,
+  })
+`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `queryKey: string | unknown[]`
+  - Định danh cho query, phân biệt giữa các query khác
+- `queryFn: (context: QueryFunctionContext) => Promise<TData>`
+  - Hàm truy vấn request đến API, cần trả về `Promise`
+  - Bắt buộc, trừ khi đã khai báo hàm truy vấn mặc định
+- `options`
+    - `cacheTime: number | Infinity`
+      - Thời gian dữ liệu cache nằm trong bộ nhớ (đơn vị: millisecond)
+      - Đặt giá trị là Infinity nếu vô hiệu hóa garbage collection
+    - `enabled: boolean`
+      - Đặt `false` để ngăn query tự động chạy
+    - `refetchInterval: false | number`
+      - Đặt giá trị số (đơn vị: millisecond) để làm mới truy vấn liên tục trong khoảng thời gian
+    - `refetchIntervalInBackground: boolean`
+      - Cài đặt cho phép truy vấn lại khi tab/cửa sổ đang chạy nền
+    - `refetchOnReconnect: boolean | "always"`
+      - `true`: Truy vấn lại khi có lại kết nối internet nếu dữ liệu cũ
+      - `false`: Không truy vấn lại khi có lại kết nối internet
+      - `"always"`: Luôn truy vấn lại khi có lại kết nối internet
+    - `refetchOnWindowFocus: boolean | "always"`
+      - `true`: Truy vấn lại khi focus lại vào cửa sổ nếu dữ liệu cũ
+      - `false`: Không truy vấn lại khi focus lại vào cửa sổ
+      - `"always"`: Luôn truy vấn lại khi focus lại vào cửa sổ
+    - `retry: boolean | number | (failureCount: number, error: TError) => boolean`
+      - `false`: Không bao giờ thử lại với truy vấn lỗi
+      - `true`: Thử lại truy vấn lỗi cho đến khi thành công
+      - `number`: Thử lại truy vấn lỗi một số lần
+    - `retryDelay: number | (retryAttempt: number, error: TError) => number`
+      - `number`: Đợi một khoảng thời gian (đơn vị: millisecond) trước khi thử lại
+      - Truyền vào hàm để triển khai thời gian delay tuyến tính/số mũ.
+- `result`
+  - `status: "idle" | "loading" | "error" | "success"`
+  - `isIdle: boolean`: `status === "idle"`
+  - `isLoading: boolean`: `status === "loading"`
+  - `isError: boolean`: `status === "error"`
+  - `isSuccess: boolean`: `status === "success"`
+  - `data`: dữ liệu trả về từ truy vấn
+  - `error`:
+    - Mặc định là `null`
+    - Lỗi được throw từ truy vấn
+  - `isFetched: boolean`: truy vấn đã hoàn thành
+  - `isFetching: boolean`: truy vấn đang xử lý
+  - `isStale: boolean`: dữ liệu cache đã cũ chưa (quá thời gian `staleTime` hoặc đã bị invalidate)
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Demo
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Tạo custom hook với useQuery
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[src/hooks/useData.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/hooks/useData.js)
 
-### `yarn eject`
+- Hook `useData` có thể được truy cập ở các Component khác nhau.
+- Nếu gọi trong khoảng thời gian `staleTime`, không tạo ra request mới mà lấy từ cache.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Sử dụng custom hook
+[src/MyComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/MyComponent.js)
+[src/AnotherComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/AnotherComponent.js)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Phân trang (Pagination)
+[src/PaginatedComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/PaginatedComponent.js)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Cuộn vô hạn (Infinite Scroll) với useInfiniteQuery
+[src/InfiniteComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/InfiniteComponent.js)

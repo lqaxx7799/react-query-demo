@@ -1,15 +1,8 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import useData from './hooks/useData';
 
-export default function MyComponent() {
-  const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
-    fetch(
-      "https://api.github.com/repos/tannerlinsley/react-query"
-    ).then((res) => res.json()),
-    {
-      staleTime: 20000,
-    }
-  );
+export default function MyComponent(props) {
+  const { isLoading, error, data, isFetching } = useData();
 
   if (isLoading) return "Loading...";
 
