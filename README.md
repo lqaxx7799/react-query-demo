@@ -16,7 +16,9 @@ hoặc
 `
   const { 
     data, 
+
     error, 
+
     isIdle, 
     isError, 
     isFetched, 
@@ -96,6 +98,7 @@ hoặc
 
 ### Sử dụng custom hook
 [src/MyComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/MyComponent.js) 
+
 [src/AnotherComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/AnotherComponent.js) 
 
 ### Phân trang (Pagination)
