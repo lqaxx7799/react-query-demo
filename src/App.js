@@ -1,18 +1,32 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import MyComponent from "./MyComponent";
 import AnotherComponent from "./AnotherComponent";
+import PaginatedComponent from "./PaginatedComponent";
+import InfiniteComponent from "./InfiniteComponent";
 
 const queryClient = new QueryClient();
 
 function App() {
+  const currentPath = window.location.pathname;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <MyComponent />
-      <hr />
-      <AnotherComponent />
+      {
+        currentPath === '/' ? (
+          <>
+            <MyComponent />
+            <hr />
+            <AnotherComponent />
+          </>
+        ) : currentPath === '/paginated' ? (
+          <PaginatedComponent />
+        ) : currentPath === '/infinite' ? (
+          <InfiniteComponent />
+        ) : null
+      }
       <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
