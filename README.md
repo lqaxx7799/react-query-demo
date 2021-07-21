@@ -4,40 +4,40 @@ Link tài liệu: [docs](https://react-query.tanstack.com/overview)
 
 ## Cài đặt
 
-### `yarn add react-query`
+`yarn add react-query`
 
 hoặc
 
-### `npm install react-query`
+`npm install react-query`
 
 ## API
 
 ### useQuery
 `
-  const {
-    data,
-    error,
-    isIdle,
-    isError,
-    isFetched,
-    isFetching,
-    isLoading,
-    isStale,
-    isSuccess,
-    status,
-    ...rest,
-  } = useQuery(queryKey, queryFn?, {
-    cacheTime,
-    enabled,
-    refetchInterval,
-    refetchIntervalInBackground,
-    refetchOnReconnect,
-    refetchOnWindowFocus,
-    retry,
-    retryDelay,
-    staleTime,
-    ...rest,
-  })
+  const { 
+    data, 
+    error, 
+    isIdle, 
+    isError, 
+    isFetched, 
+    isFetching, 
+    isLoading, 
+    isStale, 
+    isSuccess, 
+    status, 
+    ...rest, 
+  } = useQuery(queryKey, queryFn?, { 
+    cacheTime, 
+    enabled, 
+    refetchInterval, 
+    refetchIntervalInBackground, 
+    refetchOnReconnect, 
+    refetchOnWindowFocus, 
+    retry, 
+    retryDelay, 
+    staleTime, 
+    ...rest, 
+  }) 
 `
 
 - `queryKey: string | unknown[]`
@@ -95,11 +95,11 @@ hoặc
 - Nếu gọi trong khoảng thời gian `staleTime`, không tạo ra request mới mà lấy từ cache.
 
 ### Sử dụng custom hook
-[src/MyComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/MyComponent.js)
-[src/AnotherComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/AnotherComponent.js)
+[src/MyComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/MyComponent.js) 
+[src/AnotherComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/AnotherComponent.js) 
 
 ### Phân trang (Pagination)
-[src/PaginatedComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/PaginatedComponent.js)
+[src/PaginatedComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/PaginatedComponent.js) 
 
 ### Cuộn vô hạn (Infinite Scroll) với useInfiniteQuery
-[src/InfiniteComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/InfiniteComponent.js)
+[src/InfiniteComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/InfiniteComponent.js) 
