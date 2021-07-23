@@ -95,12 +95,33 @@ hoặc
 - Nếu gọi trong khoảng thời gian `staleTime`, không tạo ra request mới mà lấy từ cache.
 
 ### Sử dụng custom hook
+
 [src/MyComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/MyComponent.js) 
 
 [src/AnotherComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/AnotherComponent.js) 
 
+- `http://localhost:3000/`
+
 ### Phân trang (Pagination)
+
 [src/PaginatedComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/PaginatedComponent.js) 
 
+- `http://localhost:3000/paginated`
+
 ### Cuộn vô hạn (Infinite Scroll) với useInfiniteQuery
+
 [src/InfiniteComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/InfiniteComponent.js) 
+
+- `http://localhost:3000/infinite`
+
+### Sử dụng với Class Component
+
+- `http://localhost:3000/class`
+- React Query chỉ cung cấp hook như `useQuery`, `useInfiniteQuery`, `useMutation` để sử dụng trong Function Component.
+- Để sử dụng với Class Component, có thể viết một `Higher Order Component (HOC)` bọc bên ngoài hook của React Query và truyền vào props của component.
+
+[src/wrappers/withQuery.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/wrappers/withQuery.js)
+
+- Sử dụng:
+
+[src/ClassComponent.js](https://github.com/lqaxx7799/react-query-demo/tree/master/src/ClassComponent.js) 

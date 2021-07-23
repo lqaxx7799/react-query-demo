@@ -6,6 +6,7 @@ import MyComponent from "./MyComponent";
 import AnotherComponent from "./AnotherComponent";
 import PaginatedComponent from "./PaginatedComponent";
 import InfiniteComponent from "./InfiniteComponent";
+import ClassComponent from "./ClassComponent";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,8 @@ function App() {
             <hr />
             <AnotherComponent />
           </>
+        ) : currentPath === '/class' ? (
+          <ClassComponent />
         ) : currentPath === '/paginated' ? (
           <PaginatedComponent />
         ) : currentPath === '/infinite' ? (
